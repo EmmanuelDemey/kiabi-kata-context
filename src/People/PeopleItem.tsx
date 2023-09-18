@@ -1,3 +1,4 @@
+import {usePeopleLike} from "../context";
 import { Person } from "../model";
 import styles from "./PeopleItem.module.css";
 import {useTranslation} from "react-i18next";
@@ -9,9 +10,7 @@ type PeopleItemProps = {
 export const PeopleItem = ({ person }: PeopleItemProps) => {
   const { t } = useTranslation()
 
-  const isAlreadyLiked = false
-  const like = () => {}
-  const dislike = () => {}
+  const {isLiked, like, dislike } = usePeopleLike();
 
   return (
     <tr>
@@ -19,8 +18,8 @@ export const PeopleItem = ({ person }: PeopleItemProps) => {
       <td>{person.gender}</td>
       <td>{person.birth_year}</td>
       <td>
-        {!isAlreadyLiked && <button onClick={() => like()} type="button"> {t('LIKE')} </button>}  
-        {isAlreadyLiked && <button onClick={() =>dislike()} type="button"> {t('DISLIKE')} </button>  }
+        {!isLiked(person.url) && <button onClick={() => like(person.url)} type="button"> {t('LIKE')} </button>}  
+        {isLiked(person.url) && <button onClick={() =>dislike(person.url)} type="button"> {t('DISLIKE')} </button>  }
       </td>
     </tr>
   );

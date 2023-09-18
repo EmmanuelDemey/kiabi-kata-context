@@ -1,7 +1,8 @@
-import {useCallback, useEffect, useState} from "react";
+import {createContext, useCallback, useEffect, useState} from "react";
 import {PeopleFilter} from "../People/PeopleFilter";
 import {PeopleTable} from "../People/PeopleTable";
 import {useQuery} from "@tanstack/react-query";
+import {usePeopleLike} from "../context";
 
 
 const useTitle = (title: string) => {
@@ -78,6 +79,8 @@ const useFetch = (defaultUrl: string) => {
 export const Home = () => {
   useTitle('Home Page with Custom Hook');
 
+  const { person } = usePeopleLike();
+
   const {data, loading, handleNextPage, handlePreviousPage, onFilterHandler, filterValue} = useFetch(defaultUrl)
 
   if (loading) {
@@ -96,6 +99,7 @@ export const Home = () => {
         </p>
       </div>
 
+      <p> Vous aimez {person.length} personnages </p>
       <PeopleFilter onFilter={onFilterHandler} value={filterValue}>
       <p> Filter </p>
       </PeopleFilter>
